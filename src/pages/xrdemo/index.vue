@@ -1,6 +1,6 @@
 <!--
  * @Date: 2026-01-08 09:34:55
- * @LastEditTime: 2026-01-08 16:55:20
+ * @LastEditTime: 2026-01-08 17:41:36
  * @Description: xr demo page
 -->
 <template>
@@ -34,7 +34,7 @@
     </view>
 </template>
 
-<script setup>
+<script setup name="XRDEMO">
 const width = ref(300);
 const height = ref(300);
 const renderWidth = ref(300);
