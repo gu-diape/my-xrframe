@@ -1,0 +1,84 @@
+<!-- 组件通信，加上HUD：场景添加tick事件，并且为模型和相机都加上id方便索引 -->
+<xr-scene bind:ready="handleReady" bind:tick="handleTick">
+  <!-- 简单放置一个立方体在场景中（在不需要光照的条件下，引入simple材质的定义） -->
+  <!-- <xr-asset-material asset-id="simple" effect="simple" uniforms="u_baseColorFactor:0.8 0.4 0.4 1" />
+  <xr-mesh node-id="cube" geometry="cube" material="simple" /> -->
+
+  <!-- 资源合集 -->
+  <xr-assets bind:progress="handleAssetsProgress" bind:loaded="handleAssetsLoaded">
+    <!-- <xr-asset-load type="texture" asset-id="waifu" src="https://mmbizwxaminiprogram-1258344707.cos.ap-guangzhou.myqcloud.com/xr-frame/demo/waifu.png" />
+    <xr-asset-load type="video-texture" asset-id="office" src="https://mmbizwxaminiprogram-1258344707.cos.ap-guangzhou.myqcloud.com/xr-frame/demo/videos/office-skybox.mp4" options="autoPlay: true, loop: true" />
+    <xr-asset-load type="texture" asset-id="weakme" src="https://mmbizwxaminiprogram-1258344707.cos.ap-guangzhou.myqcloud.com/xr-frame/demo/weakme.jpg" />
+    <xr-asset-load asset-id="anim" type="keyframe" src="/static/animation.json"/> -->
+
+    <xr-asset-load type="gltf" asset-id="damage-helmet" src="https://mmbizwxaminiprogram-1258344707.cos.ap-guangzhou.myqcloud.com/xr-frame/demo/damage-helmet/index.glb" />
+    <xr-asset-load type="gltf" asset-id="miku" src="https://mmbizwxaminiprogram-1258344707.cos.ap-guangzhou.myqcloud.com/xr-frame/demo/miku.glb" />
+  </xr-assets>
+
+  <!-- 环境纹理 -->
+  <!-- 内置环境环视图 -->
+  <xr-env env-data="xr-frame-team-workspace-day" />
+  <!-- 自定义环境环视图(视频类) -->
+  <!-- <xr-env env-data="xr-frame-team-workspace-day" sky-map="video-office" /> -->
+  <!-- 自定义环境环视图(2D类) -->
+  <!-- <xr-env env-data="xr-frame-team-workspace-day" sky-map="weakme" is-sky2d /> -->
+
+  <!-- 灯光/光线 -->
+  <!-- 照亮物体表面，纯色没有就是全黑，模型没有就是显暗 -->
+  <xr-light type="ambient" color="1 1 1" intensity="1" />
+  <xr-light type="directional" rotation="40 70 0" color="1 1 1" intensity="3" cast-shadow />
+
+  <!-- 纯色立方体 + 纯色平面 -->
+  <!-- <xr-mesh node-id="cube" cast-shadow geometry="cube" uniforms="u_baseColorFactor:0.8 0.4 0.4 1" />
+  <xr-mesh position="0 -1 0" scale="4 1 4" receive-shadow geometry="plane" uniforms="u_baseColorFactor:0.4 0.6 0.8 1" />
+  <xr-camera clear-color="0.4 0.8 0.6 1" position="0 1 4" target="cube" camera-orbit-control /> -->
+
+  <!-- 纯色立方体 + 纯色平面、天空盒相机（搭配xr-env使用，用于显示环境纹理） -->
+  <!-- <xr-mesh node-id="cube" cast-shadow geometry="cube" uniforms="u_baseColorFactor:0.8 0.4 0.4 1" />
+  <xr-mesh position="0 -1 0" scale="4 1 4" receive-shadow geometry="plane" uniforms="u_baseColorFactor:0.4 0.6 0.8 1" />
+  <xr-camera clear-color="0.4 0.8 0.6 1" position="0 1 4" target="cube" camera-orbit-control background="skybox" /> -->
+
+  <!-- 材质waifu、金属粗糙光泽立方体 + 头像材质平面 -->
+  <!-- <xr-mesh node-id="cube" cast-shadow geometry="cube" uniforms="u_baseColorMap: waifu,u_metallicRoughnessValues:1 0.1" />
+  <xr-mesh position="0 -1 0" scale="4 1 4" receive-shadow geometry="plane" uniforms="u_baseColorMap: {{avatarTextureId}}" />
+  <xr-camera clear-color="0.4 0.8 0.6 1" position="0 1 4" target="cube" camera-orbit-control background="skybox" /> -->
+
+  <!-- 材质waifu、金属粗糙光泽四点移动立方体 + 头像材质变色旋转平面 -->
+  <!-- <xr-mesh
+    node-id="cube" cast-shadow anim-keyframe="anim" anim-autoplay="clip:cube,speed:2"
+    geometry="cube" uniforms="u_baseColorMap: waifu,u_metallicRoughnessValues:1 0.1"
+  />
+  <xr-mesh
+    node-id="plane" position="0 -1 0" scale="4 1 4" receive-shadow anim-keyframe="anim" anim-autoplay="clip:plane"
+    geometry="plane" uniforms="u_baseColorMap: {{avatarTextureId}}"
+  />
+  <xr-camera
+    position="0 1 6" target="plane" background="skybox"
+    clear-color="0.4 0.8 0.6 1" camera-orbit-control
+  /> -->
+
+  <!-- 可交互的模型、模型形态准线 -->
+  <xr-gltf
+    node-id="damage-helmet" model="damage-helmet"
+    id="helmet" mesh-shape bind:touch-shape="handleTouchModel"
+  />
+  <xr-gltf
+    model="miku" position="-0.15 0.75 0" scale="0.07 0.07 0.07" rotation="0 180 0" anim-autoplay
+    id="miku" cube-shape="autoFit:true" shape-gizmo bind:touch-shape="handleTouchModel"
+  />
+  <xr-camera
+    id="camera" position="0 1.5 4" target="damage-helmet" background="skybox"
+    clear-color="0.4 0.8 0.6 1" camera-orbit-control
+  />
+
+</xr-scene>
+
+<!-- 场景xr-scene -->
+<!-- 相机xr-camera clear-color: 清屏颜色, position: 相机位置, target: 相机目标, camera-orbit-control: 相机轨道控制(即可以旋转页面) -->
+<!-- 物体xr-mesh node-id: 物体id, geometry: 物体几何形状(内部包含内置的几何数据、材质), material: 材质 -->
+<!-- 材质xr-asset-material asset-id: 材质id, effect: 着色器效果, uniforms: 统一变量(颜色等) -->
+<!-- 灯光xr-light 主光源：主光源包含两部分——按照编写顺序第一个写的环境光和平行光(即顺序下来第一个ambient和directional) ambient: 环境光, directional: 平行光, 颜色color, 亮度intensity -->
+<!-- 环境光照亮整个空间，没有方向没有位置；平行光是单一方向平行光线，类似太阳光，没有位置只有方向 -->
+<!-- cast-shadow产生阴影 receive-shadow接收阴影 -->
+<!-- xr-assets资源合集 xr-asset-load资源加载器 progress和loaded: 资源加载进度和完成事件 -->
+<!-- 金属粗糙度: u_metallicRoughnessValues:1 0.1 -->

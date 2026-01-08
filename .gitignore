@@ -11,6 +11,12 @@ node_modules
 .DS_Store
 dist
 *.local
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+auto-imports.d.ts
+components.d.ts
+.eslintrc-auto-import.json
 
 # Editor directories and files
 .idea
