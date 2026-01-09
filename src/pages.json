@@ -22,7 +22,7 @@
             "style": {
                 "navigationBarTitleText": "AR Demo",
                 "usingComponents": {
-                    "xr-start": "../../wxcomponents/xr-ar/index"
+                    "xr-ar": "../../wxcomponents/xr-ar/index"
                 },
                 "disableScroll": true
             }

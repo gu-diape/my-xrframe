@@ -1,0 +1,21 @@
+{
+    "keyframe": {
+        "vignette": {
+            "0": {
+                "asset-post-process.assetData.intensity": 0
+            },
+            "100": {
+                "asset-post-process.assetData.intensity": 1
+            }
+        }
+    },
+    "animation": {
+        "vignette": {
+            "keyframe": "vignette",
+            "duration": 2,
+            "ease": "ease-in-out",
+            "loop": -1,
+            "direction": "both"
+        }
+    }
+}

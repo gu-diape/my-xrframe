@@ -1,4 +1,6 @@
-<xr-scene ar-system="modes:Plane" bind:ready="handleReady">
+<!-- 点击屏幕放置模型（不太灵） -->
+<!-- ar-system的模式为Plane，即平面识别 -->
+<!-- <xr-scene ar-system="modes:Plane" bind:ready="handleReady">
   <xr-assets bind:loaded="handleAssetsLoaded">
     <xr-asset-load type="gltf" asset-id="anchor" src="https://mmbizwxaminiprogram-1258344707.cos.ap-guangzhou.myqcloud.com/xr-frame/demo/ar-plane-marker.glb" />
     <xr-asset-load type="gltf" asset-id="miku" src="https://mmbizwxaminiprogram-1258344707.cos.ap-guangzhou.myqcloud.com/xr-frame/demo/miku.glb" />
@@ -16,4 +18,103 @@
   </xr-node>
 
   <xr-camera clear-color="0.4 0.8 0.6 1" background="ar" is-ar-camera />
+</xr-scene> -->
+
+<!-- modes:Face：人脸识别，camera:Front 表示开启前置相机 -->
+<!-- <xr-scene ar-system="modes:Face;camera:Front" bind:ready="handleReady">
+  <xr-assets bind:loaded="handleAssetsLoaded">
+    <xr-asset-load type="gltf" asset-id="mask" src="https://mmbizwxaminiprogram-1258344707.cos.ap-guangzhou.myqcloud.com/xr-frame/demo/jokers_mask_persona5.glb" />
+  </xr-assets>
+
+  <xr-env env-data="xr-frame-team-workspace-day" />
+  <xr-light type="ambient" color="1 1 1" intensity="1" />
+  <xr-light type="directional" rotation="40 70 0" color="1 1 1" intensity="3" />
+
+  追加属性auto-sync 这是一个数字数组，表示将识别出的面部特征点和对应顺序的子节点绑定
+  <xr-ar-tracker mode="Face" auto-sync="43">
+    <xr-gltf model="mask" rotation="0 180 0" scale="0.5 0.5 0.5" />
+  </xr-ar-tracker>
+
+  <xr-camera clear-color="0.4 0.8 0.6 1" background="ar" is-ar-camera />
+</xr-scene> -->
+
+<!-- modes:Hand 手势识别 -->
+<!-- <xr-scene ar-system="modes:Hand" bind:ready="handleReady" bind:tick="handleTick">
+  <xr-assets bind:loaded="handleAssetsLoaded">
+    <xr-asset-load type="gltf" asset-id="cool-star" src="https://mmbizwxaminiprogram-1258344707.cos.ap-guangzhou.myqcloud.com/xr-frame/demo/cool-star.glb" />
+  </xr-assets>
+
+  <xr-env env-data="xr-frame-team-workspace-day" />
+  <xr-light type="ambient" color="1 1 1" intensity="1" />
+  <xr-light type="directional" rotation="40 70 0" color="1 1 1" intensity="3" cast-shadow />
+
+  <xr-ar-tracker id="tracker" mode="Hand" auto-sync="4">
+    <xr-gltf model="cool-star" anim-autoplay />
+  </xr-ar-tracker>
+
+  <xr-camera clear-color="0.4 0.8 0.6 1" background="ar" is-ar-camera />
+</xr-scene> -->
+
+<!-- modes:OSD 现实物体标记识别 -->
+<!-- xr-ar-tracker 识别节点上设置mode:OSD启用，同时通过src把目标物体的图片传给微信AI系统 -->
+<!-- states 渲染状态 alphaMode:BLEND 透明模式 - 半透明 -->
+<!-- <xr-scene ar-system="modes:OSD" bind:ready="handleReady">
+  <xr-assets bind:loaded="handleAssetsLoaded">
+    <xr-asset-material asset-id="mat" effect="simple" uniforms="u_baseColorFactor: 0.8 0.6 0.4 0.7" states="alphaMode:BLEND" />
+  </xr-assets>
+
+  <xr-node>
+    <xr-ar-tracker
+      mode="OSD" src="https://mmbizwxaminiprogram-1258344707.cos.ap-guangzhou.myqcloud.com/xr-frame/demo/marker/osdmarker-test.jpg"
+    >
+      <xr-mesh geometry="plane" material="mat" rotation="-90 0 0" />
+    </xr-ar-tracker>
+  </xr-node>
+
+  <xr-camera clear-color="0.4 0.8 0.6 1" background="ar" is-ar-camera />
+</xr-scene> -->
+
+<!-- modes: Marker 精准识别有一定纹理的矩形平面 -->
+<!-- xr-ar-tracker src: 配置识别源 -->
+<!-- bind:ar-tracker-switch 识别成功后触发 -->
+<xr-scene ar-system="modes:Marker" bind:ready="handleReady">
+  <xr-assets bind:loaded="handleAssetsLoaded">
+    <xr-asset-load
+      type="video-texture" asset-id="hikari" options="loop:true"
+      src="https://mmbizwxaminiprogram-1258344707.cos.ap-guangzhou.myqcloud.com/xr-frame/demo/xr-frame-team/2dmarker/hikari-v.mp4"
+    />
+    <xr-asset-material asset-id="mat" effect="simple" uniforms="u_baseColorMap: video-hikari" />
+
+    <!-- 加载粒子 -->
+    <xr-asset-load type="texture" asset-id="point" src="https://mmbizwxaminiprogram-1258344707.cos.ap-guangzhou.myqcloud.com/xr-frame/demo/particles/point.png" />
+    <!-- 加载动画配置 -->
+    <xr-asset-load asset-id="anim" type="keyframe" src="/static/animation1.json"/>
+  </xr-assets>
+
+  <xr-node wx:if="{{loaded}}">
+    <xr-ar-tracker
+      mode="Marker" bind:ar-tracker-switch="handleTrackerSwitch"
+      src="https://mmbizwxaminiprogram-1258344707.cos.ap-guangzhou.myqcloud.com/xr-frame/demo/xr-frame-team/2dmarker/hikari.jpg"
+    >
+      <!-- <xr-mesh node-id="mesh-plane" geometry="plane" material="mat" /> -->
+      <!-- 添加触摸分享 -->
+      <xr-mesh node-id="mesh-plane" geometry="plane" material="mat" cube-shape="autoFit:true" bind:touch-shape="handleShare" />
+
+      <xr-particle
+        capacity="500" emit-rate="20"
+        size="0.03 0.06" life-time="2 3" speed="0.04 0.1"
+        start-color="1 1 1 0.8" end-color="1 1 1 0.2"
+        emitter-type="BoxShape"
+        emitter-props="minEmitBox:-0.5 0 0.5,maxEmitBox:0.5 0.2 0,direction:0 0 -1,direction2:0 0 -1"
+        texture="point"
+      />
+    </xr-ar-tracker>
+  </xr-node>
+
+  <!-- 渐晕vignette -->
+  <xr-asset-post-process
+    asset-id="vignette" type="vignette" data="intensity:1,smoothness:4,color:1 0 0 1"
+    anim-keyframe="anim" anim-autoplay
+  />
+  <xr-camera clear-color="0.4 0.8 0.6 1" background="ar" is-ar-camera post-process="vignette" />
 </xr-scene>
