@@ -26,6 +26,16 @@
                 },
                 "disableScroll": true
             }
+        },
+        {
+            "path": "pages/xrdemo_ai/index",
+            "style": {
+                "navigationBarTitleText": "xrdemoAI生成版",
+                "usingComponents": {
+                    "xr-ar-ai": "../../wxcomponents/xr-ar-ai/index"
+                },
+                "disableScroll": true
+            }
         }
     ],
     "globalStyle": {

@@ -80,5 +80,5 @@
 <!-- 灯光xr-light 主光源：主光源包含两部分——按照编写顺序第一个写的环境光和平行光(即顺序下来第一个ambient和directional) ambient: 环境光, directional: 平行光, 颜色color, 亮度intensity -->
 <!-- 环境光照亮整个空间，没有方向没有位置；平行光是单一方向平行光线，类似太阳光，没有位置只有方向 -->
 <!-- cast-shadow产生阴影 receive-shadow接收阴影 -->
-<!-- xr-assets资源合集 xr-asset-load资源加载器 progress和loaded: 资源加载进度和完成事件 -->
+<!-- xr-assets资源合集 xr-asset-load资源加载器 bind:progress和bind:loaded: 资源加载进度和完成事件 -->
 <!-- 金属粗糙度: u_metallicRoughnessValues:1 0.1 -->
