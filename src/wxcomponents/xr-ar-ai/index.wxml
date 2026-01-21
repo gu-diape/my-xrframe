@@ -1,13 +1,19 @@
-<xr-scene id="xr-scene" ar-system="{{orientation}}" bind:ready="handleReady" bind:ar-ready="handleARReady" bind:ar-error="handleARError">
+<xr-scene id="xr-scene" ar-system bind:ready="handleReady" bind:ar-ready="handleARReady" bind:ar-error="handleARError">
   <xr-assets bind:progress="handleAssetsProgress" bind:loaded="handleAssetsLoaded">
     <!-- <xr-asset-load type="gltf" asset-id="gltf-table" src="https://mmbizwxaminiprogram-1258344707.cos.ap-guangzhou.myqcloud.com/xr-frame/demo/metal_table/scene.gltf" /> -->
-    <xr-asset-load type="gltf" asset-id="gltf-table" src="http://192.168.0.115:30900/models/icy_dragon.glb" />
+    <!-- <xr-asset-load type="gltf" asset-id="gltf-table" src="http://192.168.0.109:30900/models/icy_dragon.glb" /> -->
+     <xr-asset-load type="gltf" asset-id="gltf-table1" src="http://192.168.0.109:30900/models/arrow01.gltf" />
+     <xr-asset-load type="gltf" asset-id="gltf-table2" src="http://192.168.0.109:30900/models/arrow02.gltf" />
+      <xr-asset-load type="gltf" asset-id="gltf-table3" src="http://192.168.0.109:30900/models/arrow03.gltf" />
   </xr-assets>
   <xr-env env-data="xr-frame-team-workspace-day"/>
   <xr-node>
     <xr-node node-id="camera-target" position="0 0 0"></xr-node>
     <xr-node node-id="table-wrap" position="0 0 0">
-      <xr-gltf node-id="mesh-gltf-table" position="0 -1 0" rotation="0 45 0" scale="0.08 0.08 0.08" model="gltf-table" anim-autoplay />
+      <!-- <xr-gltf node-id="mesh-gltf-table" position="0 -1 0" rotation="0 45 0" scale="0.08 0.08 0.08" model="gltf-table" anim-autoplay /> -->
+      <xr-gltf node-id="mesh-gltf-table" position="0 -20 0" rotation="0 0 0" scale="0.9 0.9 0.9" model="gltf-table1" />
+      <xr-gltf node-id="mesh-gltf-table" position="0 -2 0" rotation="0 0 0" scale="0.9 0.9 0.9" model="gltf-table2" />
+      <xr-gltf node-id="mesh-gltf-table" position="0 18 -10" rotation="-45 0 0" scale="0.9 0.9 0.9" model="gltf-table3" />
     </xr-node>
     <xr-camera
       position="2 1 2" clear-color="0.925 0.925 0.925 1"

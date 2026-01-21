@@ -1,7 +1,10 @@
+/*
+ * @Date: 2026-01-13 10:05:20
+ * @LastEditTime: 2026-01-16 10:24:55
+ * @Description: file content
+ */
 Component({
-    properties: {
-        orientation: String,
-    },
+    properties: {},
     data: {
         loaded: false,
     },
