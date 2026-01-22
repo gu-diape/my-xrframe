@@ -8,6 +8,7 @@
         <button @click="handleNavTo('xrdemo')">xr-demo</button>
         <button @click="handleNavTo('ardemo')">ar-demo</button>
         <button @click="handleNavTo('xrdemo_ai')">ar-demo-ai</button>
+        <button @click="handleNavTo('arplanemarker')">ar-marker</button>
     </view>
 </template>
 

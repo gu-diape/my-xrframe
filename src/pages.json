@@ -36,6 +36,16 @@
                 },
                 "disableScroll": true
             }
+        },
+        {
+            "path": "pages/arplanemarker/index",
+            "style": {
+                "navigationBarTitleText": "ar放置play",
+                "usingComponents": {
+                    "xr-ar-marker": "../../wxcomponents/xr-ar-marker/index"
+                },
+                "disableScroll": true
+            }
         }
     ],
     "globalStyle": {

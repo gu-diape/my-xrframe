@@ -14,6 +14,10 @@
       <xr-gltf node-id="mesh-gltf-table" position="0 -20 0" rotation="0 0 0" scale="0.9 0.9 0.9" model="gltf-table1" />
       <xr-gltf node-id="mesh-gltf-table" position="0 -2 0" rotation="0 0 0" scale="0.9 0.9 0.9" model="gltf-table2" />
       <xr-gltf node-id="mesh-gltf-table" position="0 18 -10" rotation="-45 0 0" scale="0.9 0.9 0.9" model="gltf-table3" />
+      <!-- 坐标系提示，单位1 的坐标轴 -->
+      <xr-mesh node-id="mesh-x" position="1 0 0"  scale="2 0.02 0.02" geometry="cube" uniforms="u_baseColorFactor:0.7 0.3 0.3 1" ></xr-mesh>
+      <xr-mesh node-id="mesh-y" position="0 1 0"  scale="0.02 2 0.02" geometry="cube" uniforms="u_baseColorFactor:0.3 0.7 0.3 1"></xr-mesh>
+      <xr-mesh node-id="mesh-z" position="0 0 1"  scale="0.02 0.02 2" geometry="cube" uniforms="u_baseColorFactor:0.3 0.3 0.7 1"></xr-mesh>
     </xr-node>
     <xr-camera
       position="2 1 2" clear-color="0.925 0.925 0.925 1"
