@@ -1,6 +1,6 @@
 <!--
  * @Date: 2026-01-22 09:12:03
- * @LastEditTime: 2026-01-22 18:59:23
+ * @LastEditTime: 2026-01-27 18:41:29
  * @Description: ar-plan-marker 测试点击放置
 -->
 <template>
@@ -14,9 +14,9 @@
                     :width="renderWidth"
                     :height="renderHeight"
                     :style="{ width: `${width}px`, height: `${height}px` }"
-                    :modelUrlRaw="'http://192.168.0.115:30900/models/arrow03.gltf'"
-                    @loaded-change="onLoadedChange"
-                    @share-capture="onShareCapture"
+                    :resource="list"
+                    @loadedChange="onLoadedChange"
+                    @shareCapture="onShareCapture"
                 />
             </block>
         </view>
@@ -27,11 +27,14 @@
 </template>
 
 <script setup name="ARMARKER">
+import { onMounted } from "vue";
+
 const width = ref(300);
 const height = ref(600);
 const renderWidth = ref(300);
 const renderHeight = ref(300);
 const xrframeRef = ref(null);
+const list = ref([]);
 
 /**
  * @name 模型加载回调
@@ -138,6 +141,25 @@ const triggerShare = async () => {
 
     xrframeRef.value?.handleShare();
 };
+
+onMounted(() => {
+    setTimeout(() => {
+        list.value = [
+            {
+                id: "icy_dragon",
+                type: "gltf",
+                src: "http://192.168.0.109:30900/models/arrow03.gltf",
+                scale: [0.1, 0.1, 0.1].join(" "),
+                rotation: [0, 0, 0].join(" "),
+                position: [0, 0, 0].join(" "),
+                cameraPosition: [0, 0, 0].join(" "),
+                cameraRotation: [0, 0, 0].join(" "),
+                cameraFar: "1000",
+                isTarget: true,
+            },
+        ];
+    }, 1000);
+});
 
 onLoad(() => {
     // 获取屏幕宽高
