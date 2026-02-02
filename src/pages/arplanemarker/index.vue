@@ -1,6 +1,6 @@
 <!--
  * @Date: 2026-01-22 09:12:03
- * @LastEditTime: 2026-01-27 18:41:29
+ * @LastEditTime: 2026-02-02 19:26:32
  * @Description: ar-plan-marker 测试点击放置
 -->
 <template>
@@ -21,6 +21,7 @@
             </block>
         </view>
         <view class="bottom">
+            <view class="btn" @click="switchFn">切换</view>
             <view class="btn" @click="triggerShare">拍摄</view>
         </view>
     </view>
@@ -142,16 +143,33 @@ const triggerShare = async () => {
     xrframeRef.value?.handleShare();
 };
 
+const switchFn = () => {
+    list.value = [
+        {
+            id: "arrow03",
+            type: "gltf",
+            src: "http://192.168.0.109:30900/models/arrow03.gltf",
+            scale: [0.05, 0.05, 0.05].join(" "),
+            rotation: [0, 0, 0].join(" "),
+            position: [0, -1, 2].join(" "),
+            cameraPosition: [0, 0, 0].join(" "),
+            cameraRotation: [0, 0, 0].join(" "),
+            cameraFar: "1000",
+            isTarget: true,
+        },
+    ];
+};
+
 onMounted(() => {
     setTimeout(() => {
         list.value = [
             {
                 id: "icy_dragon",
                 type: "gltf",
-                src: "http://192.168.0.109:30900/models/arrow03.gltf",
-                scale: [0.1, 0.1, 0.1].join(" "),
+                src: "http://192.168.0.109:30900/models/icy_dragon.glb",
+                scale: [0.3, 0.3, 0.3].join(" "),
                 rotation: [0, 0, 0].join(" "),
-                position: [0, 0, 0].join(" "),
+                position: [0, -3, 2].join(" "),
                 cameraPosition: [0, 0, 0].join(" "),
                 cameraRotation: [0, 0, 0].join(" "),
                 cameraFar: "1000",

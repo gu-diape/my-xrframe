@@ -1,6 +1,6 @@
 /*
  * @Date: 2026-01-22 09:15:21
- * @LastEditTime: 2026-01-27 18:04:22
+ * @LastEditTime: 2026-02-02 19:23:37
  * @Description: file content
  */
 Component({
@@ -28,7 +28,7 @@ Component({
     data: {
         loaded: false,
         ready: false,
-        modelId: "gltf-" + new Date().getTime(),
+        modelId: [],
         list: [],
     },
     observers: {
@@ -103,7 +103,7 @@ Component({
                 this.loadAssets(i);
             });
 
-            // 动态创建添加GLTF资源
+            // 动态创建资源加载器添加GLTF资源
             gltfs.forEach((i) => {
                 const gltfNode = scene.createElement(xrFrameSystem.XRAssetLoad, {
                     type: i.type,
@@ -130,29 +130,31 @@ Component({
                 if (i.isTarget) {
                     const cameraElement = scene.getComponent(xrFrameSystem.XRCamera);
                     console.log("相机组件", cameraElement);
-                    if (!!cameraElement) {
+                    if (!cameraElement) {
+                        // 动态创建添加相机、相机控制器，修改相机target
+                        const cameraElement = scene.createElement(xrFrameSystem.XRCamera, {
+                            position: i.cameraPosition || "",
+                            rotation: i.cameraRotation || "",
+                            target: "mesh-gltf-" + i.id,
+                            far: i.cameraFar || "1000",
+                            background: "ar",
+                        });
+                        shadowNode.addChild(cameraElement);
+                        cameraElement.addComponent(xrFrameSystem.CameraOrbitControl);
+                        // cameraElement.getComponent(xrFrameSystem.CameraOrbitControl).setData({
+                        //     isLockZoom: true,
+                        //     isLockY: true,
+                        // });
+                    } else {
                         cameraElement.setData({
                             position: i.cameraPosition || "",
                             rotation: i.cameraRotation || "",
                             target: "mesh-gltf-" + i.id,
                             far: i.cameraFar || "1000",
                         });
+                        shadowNode.addChild(cameraElement);
+                        cameraElement.addComponent(xrFrameSystem.CameraOrbitControl);
                     }
-
-                    // 动态创建添加相机、相机控制器，修改相机target
-                    // const cameraElement = scene.createElement(xrFrameSystem.XRCamera, {
-                    //     position: i.cameraPosition || "",
-                    //     rotation: i.cameraRotation || "",
-                    //     target: "mesh-gltf-" + i.id,
-                    //     far: i.cameraFar || "1000",
-                    //     background: "skybox",
-                    // });
-                    // shadowNode.addChild(cameraElement);
-                    // cameraElement.addComponent(xrFrameSystem.CameraOrbitControl);
-                    // cameraElement.getComponent(xrFrameSystem.CameraOrbitControl).setData({
-                    //     isLockZoom: true,
-                    //     isLockY: true,
-                    // });
                 }
             });
         },
@@ -185,5 +187,8 @@ Component({
                     console.error("capture to local path error", err);
                 });
         },
+
+        // 帧循环
+        handleTick({ detail }) {},
     },
 });
