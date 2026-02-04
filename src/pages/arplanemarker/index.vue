@@ -1,6 +1,6 @@
 <!--
  * @Date: 2026-01-22 09:12:03
- * @LastEditTime: 2026-02-03 10:27:45
+ * @LastEditTime: 2026-02-04 09:54:42
  * @Description: ar-plan-marker 测试点击放置
 -->
 <template>
@@ -29,8 +29,6 @@
 </template>
 
 <script setup name="ARMARKER">
-import { onMounted } from "vue";
-
 const width = ref(300);
 const height = ref(600);
 const renderWidth = ref(300);
@@ -162,7 +160,7 @@ const switchFn = () => {
 };
 
 const removeModel = () => {
-    xrframeRef.value?.removeModel();
+    xrframeRef.value?.manualDestroyScene();
 };
 
 onMounted(() => {
@@ -190,6 +188,11 @@ onLoad(() => {
     width.value = windowInfo.windowWidth;
     renderWidth.value = width.value * windowInfo.pixelRatio;
     renderHeight.value = height.value * windowInfo.pixelRatio;
+});
+
+onUnload(() => {
+    // 页面卸载时，手动销毁xrframe实例，释放资源
+    xrframeRef.value?.manualDestroyScene();
 });
 </script>
 

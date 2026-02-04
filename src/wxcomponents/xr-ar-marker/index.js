@@ -1,6 +1,6 @@
 /*
  * @Date: 2026-01-22 09:15:21
- * @LastEditTime: 2026-02-03 18:47:13
+ * @LastEditTime: 2026-02-04 10:01:57
  * @Description: file content
  */
 Component({
@@ -209,6 +209,39 @@ Component({
                     console.warn("未找到模型元素或shadowNode", `mesh-gltf-${i.id}`, modelEl, this.shadowNode);
                 }
             });
+        },
+
+        async manualDestroyScene() {
+            if (!this.scene) return;
+            console.log("开始手动释放XR资源...");
+
+            // 方法A：如果场景中有大量动态资源，遍历并释放
+            const shadowRoot = this.scene.getElementById("shadow-node");
+            if (shadowRoot) {
+                const children = [...shadowRoot._children];
+                for (let child of children) {
+                    if (child.destroy) {
+                        child.destroy();
+                    } else if (child.release) {
+                        child.release();
+                    }
+                    shadowRoot.removeChild(child);
+                    // 如果有自定义资源ID，可以在此释放
+                    this.scene.assets.releaseAsset("gltf", child.id);
+                }
+            }
+
+            // 方法B：直接触发场景的销毁方法 (更彻底)
+            // 这是解决 `destory is not a function` 的关键
+            if (typeof this.scene.destroy === "function") {
+                this.scene.destroy();
+            } else if (this.scene.release && typeof this.scene.release === "function") {
+                this.scene.release();
+            }
+
+            // 清空引用，帮助垃圾回收
+            // this.scene = null;
+            console.log("XR资源手动释放完成");
         },
     },
 });
