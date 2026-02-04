@@ -1,6 +1,6 @@
 <!--
  * @Date: 2026-01-22 09:12:03
- * @LastEditTime: 2026-02-02 19:26:32
+ * @LastEditTime: 2026-02-03 10:27:45
  * @Description: ar-plan-marker 测试点击放置
 -->
 <template>
@@ -23,6 +23,7 @@
         <view class="bottom">
             <view class="btn" @click="switchFn">切换</view>
             <view class="btn" @click="triggerShare">拍摄</view>
+            <view class="btn" @click="removeModel">删除</view>
         </view>
     </view>
 </template>
@@ -160,6 +161,10 @@ const switchFn = () => {
     ];
 };
 
+const removeModel = () => {
+    xrframeRef.value?.removeModel();
+};
+
 onMounted(() => {
     setTimeout(() => {
         list.value = [
@@ -167,9 +172,9 @@ onMounted(() => {
                 id: "icy_dragon",
                 type: "gltf",
                 src: "http://192.168.0.109:30900/models/icy_dragon.glb",
-                scale: [0.3, 0.3, 0.3].join(" "),
+                scale: [0.03, 0.03, 0.03].join(" "),
                 rotation: [0, 0, 0].join(" "),
-                position: [0, -3, 2].join(" "),
+                position: [0, -4, 2].join(" "),
                 cameraPosition: [0, 0, 0].join(" "),
                 cameraRotation: [0, 0, 0].join(" "),
                 cameraFar: "1000",
@@ -205,12 +210,13 @@ onLoad(() => {
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 10px;
+        gap: 25px;
+        padding: 20px 10px;
 
         .btn {
-            background-color: #fff;
+            background-color: #0082ff;
             color: #000;
-            padding: 10px;
+            padding: 10px 15px;
             border-radius: 5px;
         }
     }

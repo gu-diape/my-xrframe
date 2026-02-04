@@ -6,13 +6,13 @@
 
   <!-- 资源合集 -->
   <xr-assets bind:progress="handleAssetsProgress" bind:loaded="handleAssetsLoaded">
-    <!-- <xr-asset-load type="texture" asset-id="waifu" src="https://mmbizwxaminiprogram-1258344707.cos.ap-guangzhou.myqcloud.com/xr-frame/demo/waifu.png" />
-    <xr-asset-load type="video-texture" asset-id="office" src="https://mmbizwxaminiprogram-1258344707.cos.ap-guangzhou.myqcloud.com/xr-frame/demo/videos/office-skybox.mp4" options="autoPlay: true, loop: true" />
-    <xr-asset-load type="texture" asset-id="weakme" src="https://mmbizwxaminiprogram-1258344707.cos.ap-guangzhou.myqcloud.com/xr-frame/demo/weakme.jpg" />
-    <xr-asset-load asset-id="anim" type="keyframe" src="/static/animation.json"/> -->
+    <xr-asset-load type="texture" asset-id="waifu" src="https://mmbizwxaminiprogram-1258344707.cos.ap-guangzhou.myqcloud.com/xr-frame/demo/waifu.png" />
+    <!-- <xr-asset-load type="video-texture" asset-id="office" src="https://mmbizwxaminiprogram-1258344707.cos.ap-guangzhou.myqcloud.com/xr-frame/demo/videos/office-skybox.mp4" options="autoPlay: true, loop: true" /> -->
+    <!-- <xr-asset-load type="texture" asset-id="weakme" src="https://mmbizwxaminiprogram-1258344707.cos.ap-guangzhou.myqcloud.com/xr-frame/demo/weakme.jpg" /> -->
+    <!-- <xr-asset-load asset-id="anim" type="keyframe" src="/static/animation.json"/> -->
 
-    <xr-asset-load type="gltf" asset-id="damage-helmet" src="https://mmbizwxaminiprogram-1258344707.cos.ap-guangzhou.myqcloud.com/xr-frame/demo/damage-helmet/index.glb" />
-    <xr-asset-load type="gltf" asset-id="miku" src="https://mmbizwxaminiprogram-1258344707.cos.ap-guangzhou.myqcloud.com/xr-frame/demo/miku.glb" />
+    <!-- <xr-asset-load type="gltf" asset-id="damage-helmet" src="https://mmbizwxaminiprogram-1258344707.cos.ap-guangzhou.myqcloud.com/xr-frame/demo/damage-helmet/index.glb" />
+    <xr-asset-load type="gltf" asset-id="miku" src="https://mmbizwxaminiprogram-1258344707.cos.ap-guangzhou.myqcloud.com/xr-frame/demo/miku.glb" /> -->
   </xr-assets>
 
   <!-- 环境纹理 -->
@@ -40,8 +40,10 @@
 
   <!-- 材质waifu、金属粗糙光泽立方体 + 头像材质平面 -->
   <!-- <xr-mesh node-id="cube" cast-shadow geometry="cube" uniforms="u_baseColorMap: waifu,u_metallicRoughnessValues:1 0.1" />
-  <xr-mesh position="0 -1 0" scale="4 1 4" receive-shadow geometry="plane" uniforms="u_baseColorMap: {{avatarTextureId}}" />
-  <xr-camera clear-color="0.4 0.8 0.6 1" position="0 1 4" target="cube" camera-orbit-control background="skybox" /> -->
+  <xr-mesh position="0 -1 0" scale="4 1 4" receive-shadow geometry="plane" uniforms="u_baseColorMap: {{avatarTextureId}}" /> -->
+  <!-- 纯平板， 4K装甲板一样平 -->
+  <xr-mesh node-id="cube" position="0 0 4" rotation="90 0 0" geometry="plane" uniforms="u_baseColorMap: waifu,u_metallicRoughnessValues:1 0.1" />
+  <xr-camera clear-color="0.4 0.8 0.6 1" position="0 1 -4" target="cube" camera-orbit-control background="skybox" />
 
   <!-- 材质waifu、金属粗糙光泽四点移动立方体 + 头像材质变色旋转平面 -->
   <!-- <xr-mesh
@@ -58,7 +60,7 @@
   /> -->
 
   <!-- 可交互的模型、模型形态准线 -->
-  <xr-gltf
+  <!-- <xr-gltf
     node-id="damage-helmet" model="damage-helmet"
     id="helmet" mesh-shape bind:touch-shape="handleTouchModel"
   />
@@ -69,7 +71,7 @@
   <xr-camera
     id="camera" position="0 1.5 4" target="damage-helmet" background="skybox"
     clear-color="0.4 0.8 0.6 1" camera-orbit-control
-  />
+  /> -->
 
 </xr-scene>
 

@@ -1,6 +1,6 @@
 /*
  * @Date: 2026-01-22 09:15:21
- * @LastEditTime: 2026-02-02 19:23:37
+ * @LastEditTime: 2026-02-03 18:47:13
  * @Description: file content
  */
 Component({
@@ -122,8 +122,11 @@ Component({
                     scale: i.scale || "",
                     rotation: i.rotation || "",
                 });
-                gltfNode.event.add("gltf-loaded", (event) => {
-                    console.log(">>> gltf-loaded", event);
+                // gltfNode.event.add("gltf-loaded", (event) => {
+                //     console.log(">>> gltf-loaded", event);
+                // });
+                gltfNode.event.add("touch-shape", (event) => {
+                    console.log(">>> touch-shape", event);
                 });
                 shadowNode.addChild(gltfNode);
 
@@ -159,22 +162,6 @@ Component({
             });
         },
 
-        // 重置模型到初始状态
-        resetModel: function () {
-            if (this.scene) {
-                // 获取模型节点并重置其位置、旋转和缩放
-                const modelNode = this.scene.getNodeById("mesh-gltf-fiesta_tea");
-                if (modelNode) {
-                    // 重置模型的位置、旋转和缩放到初始状态
-                    modelNode.setData({
-                        position: [0, -1.6, 1],
-                        rotation: [-90, 0, 0],
-                        scale: [0.6, 0.6, 0.6],
-                    });
-                }
-            }
-        },
-
         // 分享回调
         handleShare: function () {
             // 截屏输出为本地路径，回调完成后会自动释放
@@ -190,5 +177,38 @@ Component({
 
         // 帧循环
         handleTick({ detail }) {},
+
+        removeModel() {
+            this.data.list.forEach((i) => {
+                // 1. 根据ID找到模型元素
+                let modelEl = this.scene.getElementById(`mesh-gltf-${i.id}`);
+                if (!modelEl) {
+                    modelEl = this.scene.getNodeById(`mesh-gltf-${i.id}`);
+                }
+
+                if (modelEl && this.shadowNode) {
+                    console.log("找到模型元素并准备删除", modelEl, this.shadowNode);
+
+                    // 2. 从父节点（shadow）中移除该元素
+                    try {
+                        modelEl.release();
+                        this.shadowNode.removeChild(modelEl);
+                        console.log("模型已从场景中移除", `mesh-gltf-${i.id}`);
+                    } catch (error) {
+                        console.warn("移除模型节点时出错:", error);
+                    }
+
+                    // 3. 释放该模型加载的GLTF资源
+                    try {
+                        this.scene.assets.releaseAsset("gltf", `gltf-${i.id}`);
+                        console.log("模型资源已释放", `gltf-${i.id}`);
+                    } catch (error) {
+                        console.warn("释放模型资源时出错:", error);
+                    }
+                } else {
+                    console.warn("未找到模型元素或shadowNode", `mesh-gltf-${i.id}`, modelEl, this.shadowNode);
+                }
+            });
+        },
     },
 });
