@@ -38,11 +38,21 @@
             }
         },
         {
-            "path": "pages/arplanemarker/index",
+            "path": "pages/armarker/index",
             "style": {
                 "navigationBarTitleText": "ar放置play",
                 "usingComponents": {
                     "xr-ar-marker": "../../wxcomponents/xr-ar-marker/index"
+                },
+                "disableScroll": true
+            }
+        },
+        {
+            "path": "pages/arplanemarker/index",
+            "style": {
+                "navigationBarTitleText": "ar放置play2",
+                "usingComponents": {
+                    "xr-ar-marker-plane": "../../wxcomponents/xr-ar-marker-plane/index"
                 },
                 "disableScroll": true
             }

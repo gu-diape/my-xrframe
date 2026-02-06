@@ -1,6 +1,6 @@
 /*
  * @Date: 2026-01-22 09:15:21
- * @LastEditTime: 2026-02-04 10:01:57
+ * @LastEditTime: 2026-02-06 16:25:46
  * @Description: file content
  */
 Component({
@@ -211,6 +211,7 @@ Component({
             });
         },
 
+        // 手动释放场景资源
         async manualDestroyScene() {
             if (!this.scene) return;
             console.log("开始手动释放XR资源...");
